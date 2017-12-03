@@ -30,6 +30,22 @@
      ]
  };
 
+ // Another Example Album
+ var albumXX = {
+     title: 'I See You',
+     artist: 'The XX',
+     label: 'EM',
+     year: '2017',
+     albumArtUrl: 'assets/images/album_covers/18.png',
+     songs: [
+         { title: 'Dangerous', duration: '4:10' },
+         { title: 'Say Something Loving', duration: '3:58' },
+         { title: 'Lips', duration: '3:20'},
+         { title: 'A Violent Noise', duration: '3:47' },
+         { title: 'Performance', duration: '4:06'}
+     ]
+ };
+
  var createSongRow = function(songNumber, songName, songLength) {
      var template =
         '<tr class="album-view-song-item">'
@@ -42,14 +58,13 @@
      return template;
  };
 
- var setCurrentAlbum = function(album) {
-     // #1
-     var albumTitle = document.getElementsByClassName('album-view-title')[0];
-     var albumArtist = document.getElementsByClassName('album-view-artist')[0];
-     var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
-     var albumImage = document.getElementsByClassName('album-cover-art')[0];
-     var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
+ var albumTitle = document.getElementsByClassName('album-view-title')[0];
+ var albumArtist = document.getElementsByClassName('album-view-artist')[0];
+ var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
+ var albumImage = document.getElementsByClassName('album-cover-art')[0];
+ var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
 
+ var setCurrentAlbum = function(album) {
      // #2
      albumTitle.firstChild.nodeValue = album.title;
      albumArtist.firstChild.nodeValue = album.artist;
@@ -67,4 +82,14 @@
 
  window.onload = function() {
      setCurrentAlbum(albumPicasso);
+
+     var albums = [albumPicasso, albumMarconi, albumXX];
+     var index = 1;
+     albumImage.addEventListener("click", function(event) {
+       setCurrentAlbum(albums[index]);
+       index++;
+       if (index == album.length) {
+         index = 0;
+       }
+     });
  };
