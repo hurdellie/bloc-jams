@@ -15,7 +15,7 @@
      	  if (currentlyPlayingSongNumber !== null) {
      		// Revert to song number for currently playing song because user started playing new song.
      		var currentlyPlayingCell = $('.song-item-number[data-song-number="' + currentlyPlayingSongNumber + '"]');
-     		ccurrentlyPlayingCell.html(currentlyPlayingSongNumber);
+     		currentlyPlayingCell.html(currentlyPlayingSongNumber);
      	}
      	if (currentlyPlayingSongNumber !== songNumber) {
      		// Switch from Play -> Pause button to indicate new song is playing.
@@ -63,7 +63,7 @@
  var $albumImage = $('.album-cover-art');
  var $albumSongList = $('.album-view-song-list');
 
- var setCurrentAlbum = function(album) {
+var setCurrentAlbum = function(album) {
     currentAlbum = album;
      // #2
      $albumTitle.text(album.title);
