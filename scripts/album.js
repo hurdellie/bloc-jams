@@ -35,7 +35,7 @@ var createSongRow = function(songNumber, songName, songLength) {
         '<tr class="album-view-song-item">'
       + '  <td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
       + '  <td class="song-item-title">' + songName + '</td>'
-      + '  <td class="song-item-duration">' + songLength + '</td>'
+      + '  <td class="song-item-duration">' + filterTimeCode(songLength) + '</td>'
       + '</tr>'
       ;
 
@@ -54,7 +54,7 @@ var createSongRow = function(songNumber, songName, songLength) {
         var $volumeFill = $('.volume .fill');
         var $volumeThumb = $('.volume .thumb');
         $volumeFill.width(currentVolume + '%');
-        $volumeThumb.css({left: currentVolume + '%'}); 
+        $volumeThumb.css({left: currentVolume + '%'});
 
      		$(this).html(pauseButtonTemplate);
         setSong(songNumber);
@@ -131,8 +131,8 @@ var setCurrentAlbum = function(album) {
              // #11
              var seekBarFillRatio = this.getTime() / this.getDuration();
              var $seekBar = $('.seek-control .seek-bar');
-
              updateSeekPercentage($seekBar, seekBarFillRatio);
+             setCurrentTimeInPlayerBar(this.getTime());
          });
      }
  };
@@ -194,6 +194,27 @@ var setupSeekBars = function() {
   });
 
 };
+
+var filterTimeCode = function(timeInSeconds) {
+    var min = timeInSeconds/60;
+    var sec = Math.floor((min - Math.floor(min))*60);
+    min = Math.floor(min);
+    if (sec < 10) {
+       sec = "0" + sec;
+    }
+    return min + ':' + sec;
+}
+
+var setCurrentTimeInPlayerBar = function(currentTime) {
+    $('.current-time').text(filterTimeCode(currentTime));
+}
+
+var setTotalTimeInPlayerBar = function(totalTime) {
+    $('.total-time').text(filterTimeCode(totalTime));
+}
+
+
+
 
 var trackIndex = function(album, song) {
     return album.songs.indexOf(song);
@@ -260,6 +281,7 @@ var previousSong = function() {
      $('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.title + " - " + currentAlbum.artist);
 
      $('.main-controls .play-pause').html(playerBarPauseButton);
+     setTotalTimeInPlayerBar(currentSongFromAlbum.duration);
  };
 
  var togglePlayFromPlayerBar = function () {
